@@ -14,7 +14,7 @@ const ResultContextProvider = ({ children }) => {
     const response = await fetch(`${baseUrl}${type}`, {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "8c6308cda6msh45b6ea5378b2f0cp1f9ef0jsn1d0517279fc3",
+        "X-RapidAPI-Key": process.env.RAPIDAPI_KEY,
         "X-RapidAPI-Host": "contextualwebsearch-websearch-v1.p.rapidapi.com",
       },
     });

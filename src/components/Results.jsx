@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import ReactPlayer from "react-player";
+import { useLocation } from "react-router-dom";
 
 import { useResultContext } from "../contexts/ResultContextProvider";
 import { Loading } from "./Loading";
@@ -25,7 +24,7 @@ export const Results = () => {
         );
       }
     }
-  }, []);
+  }, [searchTerm, location.pathname]);
 
   if (loading) return <Loading />;
 
@@ -50,11 +49,31 @@ export const Results = () => {
         </div>
       );
     case "/images":
-      return "SEARCH";
-    case "/news":
-      return "SEARCH";
-    case "/videos":
-      return "SEARCH";
+      return (
+        <div className="flex flex-wrap justify-center items-center">
+          {results?.value?.map(({ title, webpageUrl, thumbnail }, index) => {
+            return (
+              <a
+                className="sm:p-3 p-5"
+                href={webpageUrl}
+                key={index}
+                target="_blank"
+                rel="norefferer"
+              >
+                <img src={thumbnail} alt={title} loading="lazy" />
+                <p className="text-sm mt-2">
+                  {title.length > 30 ? title.substring(0, 30) : `${title}...`}
+                </p>
+                <p className="text-sm mt-2">
+                  {webpageUrl?.length > 30
+                    ? webpageUrl?.substring(0, 30)
+                    : `${webpageUrl}...`}
+                </p>
+              </a>
+            );
+          })}
+        </div>
+      );
 
     default:
       return "ERROR";
